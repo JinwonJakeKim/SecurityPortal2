@@ -26,7 +26,19 @@
             <label for="content">내용</label>
             <textarea class="form-control" name="content" id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
         </div>
-        <button type="submit" class="btn btn-primary">저장하기</button>
+        <div>
+            <br>
+            <input type="file" name="FileSeclet" id="FileSeclet">
+            <br>
+        </div>
+        <div>
+            <br>
+            <button type="submit" class="btn btn-primary">저장하기</button>
+            <br>
+        </div>
+
+
+
     </form>
 </div>
 {% endblock %}

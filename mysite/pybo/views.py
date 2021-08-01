@@ -3,18 +3,77 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Question
+from .models import Question, Model_laws_data, Model_SKTL_Policy, Model_GuideManual, Model_Trend
 from django.utils import timezone
 from .forms import QuestionForm, AnswerForm
+from django.core.paginator import Paginator
+
+def home(request):
+    """
+    pybo HOME 출력
+    """
+    return render(request, 'pybo/home.html')
+
+def laws_data(request):
+    """
+    pybo HOME 출력
+    """
+
+    # 입력 인자
+    page = request.GET.get('page', '1') # 페이지(ex-localhost:8000/pybo/?page=1)
+
+    # 조회
+    laws_list = Model_laws_data.objects.order_by('-create_date')
+
+
+    # 페이징 처리
+    paginator = Paginator(laws_list, 10) # 페이지당 10개씩 보여 주기, question_list를 페이징 객체 paginator 로 변환
+    page_obj = paginator.get_page(page)
+
+    context = {'laws_list': page_obj}
+    return render(request, 'pybo/laws_data.html', context)
+
+def regulation_data(request):
+    """
+    pybo HOME 출력
+    """
+    return render(request, 'pybo/regulation_data.html')
+
+def SKTL_Policy(request):
+    """
+    pybo HOME 출력
+    """
+    return render(request, 'pybo/SKTL_Policy.html')
+
+def GuideManual(request):
+    """
+    pybo HOME 출력
+    """
+    return render(request, 'pybo/GuideManual.html')
+
+def Trend(request):
+    """
+    pybo HOME 출력
+    """
+    return render(request, 'pybo/Trend.html')
 
 def index(request):
     """
     pybo 목록 출력
     """
-    question_list = Question.objects.order_by('-create_date')
-    context = {'question_list' : question_list}
+    # 입력 인자
+    page = request.GET.get('page', '1') # 페이지(ex-localhost:8000/pybo/?page=1)
 
-    return  render(request, 'pybo/question_list.html', context)
+    # 조회
+    question_list = Question.objects.order_by('-create_date')
+
+
+    # 페이징 처리
+    paginator = Paginator(question_list, 10) # 페이지당 10개씩 보여 주기, question_list를 페이징 객체 paginator 로 변환
+    page_obj = paginator.get_page(page)
+
+    context = {'question_list': page_obj}
+    return render(request, 'pybo/question_list.html', context)
 
 def detail(request, question_id):
     """
