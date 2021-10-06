@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+
+<div class="container my-3">
+    <h1 class="border-bottom py-2">가이드 및 메뉴얼</h1>
+    <table  class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if guide_list %}
+        {% for guide in guide_list %}
+        <tr>
+            <td>{{ guide_list.paginator.count|sub:guide_list.start_index|sub:forloop.counter0|add:1 }}</td>
+            <td>
+                <a href="{% url 'pybo:guide_detail' guide.id %}">
+                    {{ guide.subject }}
+                </a>
+            </td>
+            <td>{{ guide.create_date }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colsapn="3">질문이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <a href="{% url 'pybo:guide_create' %}" class="btn btn-primary" >
+        질문 등록하기
+    </a>
+</div>
+{% endblock %}
+
+<!--
+{% if guide_list %}
+    <ul>
+    {% for guide in guide_list %}
+        <li><a href="{% url 'pybo:detail' guide.id %}">{{ guide.subject }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% endif %}
+-->
+

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load pybo_filter %}
+{% block content %}
+
+<div class="container my-3">
+    <h1 class="border-bottom py-2">SK텔링크 정책</h1>
+    <table  class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if SKTL_policy_list %}
+        {% for SKTL_policy in SKTL_policy_list %}
+        <tr>
+            <td>{{ SKTL_policy_list.paginator.count|sub:SKTL_policy_list.start_index|sub:forloop.counter0|add:1 }}</td>
+            <td>
+                <a href="{% url 'pybo:SKTL_policy_detail' SKTL_policy.id %}">
+                    {{ SKTL_policy.subject }}
+                </a>
+            </td>
+            <td>{{ SKTL_policy.create_date }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colsapn="3">질문이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <a href="{% url 'pybo:SKTL_policy_create' %}" class="btn btn-primary" >
+        질문 등록하기
+    </a>
+</div>
+{% endblock %}
+
+<!--
+{% if SKTL_policy_list %}
+    <ul>
+    {% for SKTL_policy in SKTL_policy_list %}
+        <li><a href="{% url 'pybo:detail' SKTL_policy.id %}">{{ SKTL_policy.subject }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% endif %}
+-->
+
